@@ -1,0 +1,14 @@
+version: '3.5'
+services:
+  postgres:
+    image: postgres:9.6-alpine
+    hostname: postgres
+    ports:
+      - "5432:5432"
+    expose:
+      - "5432"
+    environment:
+      - POSTGRES_DB=catalogdb
+      - POSTGRES_USERNAME=postgres
+      - POSTGRES_PASSWORD=postgres
+    container_name: postgres_catalog
