@@ -12,10 +12,13 @@ public class Adapter {
     public Product adapt(ProductEntity entity){
         return new Product(
                 entity.getId(),
+                entity.getCode(),
                 entity.getName(),
                 adapt(entity.getTypeEntity()),
                 entity.getPrice(),
-                entity.getRegistryDate());
+                entity.getRegistryDate(),
+                entity.getLastUpdate()
+        );
     }
 
     public Type adapt(TypeEntity entity){
@@ -28,6 +31,7 @@ public class Adapter {
 
     public ProductEntity adapt(Product product){
         return new ProductEntity(
+                product.getCode(),
                 product.getName(),
                 adapt(product.getType()),
                 product.getPrice()

@@ -3,19 +3,19 @@ package com.natal.catalogservice.service;
 import com.natal.catalogservice.domain.Product;
 import com.natal.catalogservice.entity.ProductEntity;
 import com.natal.catalogservice.entity.TypeEntity;
-import com.natal.catalogservice.facade.ProductFacade;
+import com.natal.catalogservice.facade.ProductService;
 import com.natal.catalogservice.repository.ProductRepository;
 import com.natal.catalogservice.repository.TypeRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Service
 @Slf4j
-public class ProductService implements ProductFacade {
+@Component
+public class ProductFacade implements ProductService {
 
     @Autowired
     private ProductRepository productRepository;
@@ -28,13 +28,18 @@ public class ProductService implements ProductFacade {
 
     @Override
     public List<Product> findProducts() {
+        log.info("Iniciando busca por produtos");
         List<Product> products = new ArrayList<>();
-        List<ProductEntity> productEntities = productRepository.findAll();
-
-        for (ProductEntity p : productEntities){
-            products.add(adapter.adapt(p));
+        try {
+            List<ProductEntity> productEntities = productRepository.findAll();
+            for (ProductEntity p : productEntities){
+                products.add(adapter.adapt(p));
+            }
+            return products;
         }
-
+        catch (Exception e){
+            log.error("Falha ao consultar produtos ", e);
+        }
         return products;
     }
 
@@ -68,13 +73,13 @@ public class ProductService implements ProductFacade {
 
     @Override
     public void insertProduct(Product product){
-        ProductEntity productEntity = adapter.adapt(product);
-        ProductEntity productEntityPersisted = productRepository.save(productEntity);
-        if (productEntityPersisted==null){
-            log.error("erro ao persistir produto");
-        }
-        else {
+        try {
+            ProductEntity productEntity = adapter.adapt(product);
+            ProductEntity productEntityPersisted = productRepository.save(productEntity);
             log.info("sucesso ao persistir produto: {}", productEntityPersisted);
+        }
+        catch (Exception e){
+            log.error("erro ao persistir produto ", e);
         }
     }
 

@@ -1,21 +1,16 @@
 package com.natal.catalogservice.entity;
 
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
 @Getter
 @Table(name = "product")
-@NoArgsConstructor
 public class ProductEntity extends EntityClass{
 
-    public ProductEntity(String name, TypeEntity typeEntity, int price) {
-        this.name = name;
-        this.typeEntity = typeEntity;
-        this.price = price;
-    }
+    @Column(name = "code")
+    private String code;
 
     @Column(name = "name")
     private String name;
@@ -27,4 +22,13 @@ public class ProductEntity extends EntityClass{
     @Column(name = "price")
     private int price;
 
+    public ProductEntity() {
+    }
+
+    public ProductEntity(String code, String name, TypeEntity typeEntity, int price) {
+        this.code = code;
+        this.name = name;
+        this.typeEntity = typeEntity;
+        this.price = price;
+    }
 }

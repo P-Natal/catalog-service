@@ -13,6 +13,8 @@ public class Product {
 
     private Long id;
 
+    private String code;
+
     private String name;
 
     private Type type;
@@ -20,4 +22,6 @@ public class Product {
     private int price;
 
     private Date registryDate;
+
+    private Date lastUpdate;
 }

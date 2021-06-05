@@ -7,12 +7,10 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public interface ProductFacade {
+public interface ProductService {
 
     List<Product> findProducts();
-
     List<Product> findProductsByTypeName(String typeName);
-
     void insertProduct(Product product);
 
 }

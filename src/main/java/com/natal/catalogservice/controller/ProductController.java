@@ -1,7 +1,7 @@
 package com.natal.catalogservice.controller;
 
 import com.natal.catalogservice.domain.Product;
-import com.natal.catalogservice.facade.ProductFacade;
+import com.natal.catalogservice.facade.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,11 +14,11 @@ import java.util.List;
 public class ProductController {
 
     @Autowired
-    private ProductFacade productFacade;
+    private ProductService productService;
 
-    @GetMapping("/all")
+    @GetMapping
     public List<Product> getProductList(){
-        return productFacade.findProducts();
+        return productService.findProducts();
     }
 
 }
