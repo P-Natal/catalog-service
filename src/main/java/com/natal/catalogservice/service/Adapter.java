@@ -5,6 +5,7 @@ import com.natal.catalogservice.domain.Type;
 import com.natal.catalogservice.entity.ProductEntity;
 import com.natal.catalogservice.entity.TypeEntity;
 import org.springframework.stereotype.Component;
+import com.natal.catalogservice.controller.*;
 
 @Component
 public class Adapter {
@@ -16,6 +17,7 @@ public class Adapter {
                 entity.getName(),
                 adapt(entity.getTypeEntity()),
                 entity.getPrice(),
+                entity.isAvailable(),
                 entity.getRegistryDate(),
                 entity.getLastUpdate()
         );
@@ -34,7 +36,18 @@ public class Adapter {
                 product.getCode(),
                 product.getName(),
                 adapt(product.getType()),
-                product.getPrice()
+                product.getPrice(),
+                product.isAvailable()
+        );
+    }
+
+    public ProductEntity adapt(ProductTO product){
+        return new ProductEntity(
+                product.getCode(),
+                product.getName(),
+                new TypeEntity(product.getType()),
+                product.getPrice(),
+                product.isAvailable()
         );
     }
 

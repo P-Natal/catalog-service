@@ -1,15 +1,11 @@
-package com.natal.catalogservice.domain;
+package com.natal.catalogservice.controller;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 import java.util.Date;
 
-@Getter
-@Setter
-@AllArgsConstructor
-public class Product {
+@Data
+public class ProductTO {
 
     private Long id;
 
@@ -17,7 +13,7 @@ public class Product {
 
     private String name;
 
-    private Type type;
+    private String type;
 
     private int price;
 

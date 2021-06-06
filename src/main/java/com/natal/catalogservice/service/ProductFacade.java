@@ -1,5 +1,6 @@
 package com.natal.catalogservice.service;
 
+import com.natal.catalogservice.controller.ProductTO;
 import com.natal.catalogservice.domain.Product;
 import com.natal.catalogservice.entity.ProductEntity;
 import com.natal.catalogservice.entity.TypeEntity;
@@ -83,5 +84,35 @@ public class ProductFacade implements ProductService {
         }
     }
 
+    @Override
+    public void persistProducts(List<ProductTO> products) {
+        List<ProductEntity> productEntities = convertToEntity(products);
+        if (!productEntities.isEmpty()){
+            productRepository.saveAll(productEntities);
+        }
+    }
+
+    private List<ProductEntity> convertToEntity(List<ProductTO> products) {
+        List<ProductEntity> productEntities = new ArrayList<>();
+        try {
+            for(ProductTO product : products){
+                if(isTypeValid(product.getType())){
+                    productEntities.add(adapter.adapt(product));
+                }
+                else {
+                    log.error("Tipo de produto recebido inválido! [{}]", product.getType());
+                }
+            }
+        }
+        catch (Exception e){
+            log.error("Falha ao persistir lista de produtos ", e);
+        }
+        return productEntities;
+    }
+
+    private boolean isTypeValid(String productType) {
+        List<TypeEntity> typeEntities = typeRepository.findAll();
+        return typeEntities.stream().anyMatch(n -> n.getName().equals(productType));
+    }
 
 }

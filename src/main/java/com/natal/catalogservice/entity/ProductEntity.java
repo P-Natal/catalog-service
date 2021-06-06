@@ -22,13 +22,17 @@ public class ProductEntity extends EntityClass{
     @Column(name = "price")
     private int price;
 
+    @Column(name = "available")
+    private boolean available;
+
     public ProductEntity() {
     }
 
-    public ProductEntity(String code, String name, TypeEntity typeEntity, int price) {
+    public ProductEntity(String code, String name, TypeEntity typeEntity, int price, boolean available) {
         this.code = code;
         this.name = name;
         this.typeEntity = typeEntity;
         this.price = price;
+        this.available = available;
     }
 }
