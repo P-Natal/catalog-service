@@ -8,26 +8,13 @@ import java.util.Date;
 
 @Data
 @AllArgsConstructor
-public class ProductTO {
+public class TypeTO {
 
     private Long id;
 
     @JsonProperty(required = true)
-    private String code;
-
-    @JsonProperty(required = true)
     private String name;
 
-    @JsonProperty(required = true)
-    private String type;
-
-    @JsonProperty(required = true)
-    private int price;
-
-    @JsonProperty(required = true)
-    private boolean available;
-
     private Date registryDate;
-
-    private Date lastUpdate;
 }
+

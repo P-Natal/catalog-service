@@ -10,7 +10,7 @@ create table product
     id              bigserial constraint product_key primary key,
     code            varchar(20) not null,
     name            varchar(50) not null,
-    type            bigint not null references type (id),
+    type_id            bigint not null references type (id),
     price           int NOT NULL,
     available       boolean not null,
     registry_date   timestamp not null,

@@ -13,4 +13,6 @@ import java.util.List;
 public interface ProductRepository extends JpaRepository<ProductEntity, Long> {
     @Query("select p from ProductEntity p where p.typeEntity = :typeEntity")
     List<ProductEntity> findByType(@Param("typeEntity") TypeEntity typeEntity);
+
+    ProductEntity findByCode(String code);
 }

@@ -10,12 +10,12 @@ import com.natal.catalogservice.controller.*;
 @Component
 public class Adapter {
 
-    public Product adapt(ProductEntity entity){
-        return new Product(
+    public ProductTO adapt(ProductEntity entity){
+        return new ProductTO(
                 entity.getId(),
                 entity.getCode(),
                 entity.getName(),
-                adapt(entity.getTypeEntity()),
+                entity.getTypeEntity().getName(),
                 entity.getPrice(),
                 entity.isAvailable(),
                 entity.getRegistryDate(),
@@ -41,11 +41,11 @@ public class Adapter {
         );
     }
 
-    public ProductEntity adapt(ProductTO product){
+    public ProductEntity adapt(ProductTO product, TypeEntity typeEntity){
         return new ProductEntity(
                 product.getCode(),
                 product.getName(),
-                new TypeEntity(product.getType()),
+                typeEntity,
                 product.getPrice(),
                 product.isAvailable()
         );
@@ -57,4 +57,9 @@ public class Adapter {
         );
     }
 
+    public TypeEntity adapt(TypeTO type) {
+        return new TypeEntity(
+                type.getName()
+        );
+    }
 }

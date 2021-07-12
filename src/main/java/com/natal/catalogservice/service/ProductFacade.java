@@ -1,6 +1,7 @@
 package com.natal.catalogservice.service;
 
 import com.natal.catalogservice.controller.ProductTO;
+import com.natal.catalogservice.controller.TypeTO;
 import com.natal.catalogservice.domain.Product;
 import com.natal.catalogservice.entity.ProductEntity;
 import com.natal.catalogservice.entity.TypeEntity;
@@ -28,9 +29,9 @@ public class ProductFacade implements ProductService {
     private Adapter adapter;
 
     @Override
-    public List<Product> findProducts() {
+    public List<ProductTO> findProducts() {
         log.info("Iniciando busca por produtos");
-        List<Product> products = new ArrayList<>();
+        List<ProductTO> products = new ArrayList<>();
         try {
             List<ProductEntity> productEntities = productRepository.findAll();
             for (ProductEntity p : productEntities){
@@ -45,8 +46,32 @@ public class ProductFacade implements ProductService {
     }
 
     @Override
-    public List<Product> findProductsByTypeName(String typeName) {
-        List<Product> products = new ArrayList<>();
+    public List<TypeTO> findTypes() {
+        List<TypeEntity> typeEntities = typeRepository.findAll();
+        List<TypeTO> typesTO = new ArrayList<>();
+        for (TypeEntity typeEntity : typeEntities){
+            typesTO.add(new TypeTO(typeEntity.getId(), typeEntity.getName(), typeEntity.getRegistryDate()));
+        }
+        return typesTO;
+    }
+
+    @Override
+    public ProductTO findProductByCode(String productCode) {
+        log.info("Iniciando busca por produto com codigo [{}]", productCode);
+        ProductTO product;
+        try {
+            ProductEntity productEntitie = productRepository.findByCode(productCode);
+            return adapter.adapt(productEntitie);
+        }
+        catch (Exception e){
+            log.error("Falha ao consultar produtos ", e);
+            return null;
+        }
+    }
+
+    @Override
+    public List<ProductTO> findProductsByTypeName(String typeName) {
+        List<ProductTO> products = new ArrayList<>();
 
         TypeEntity typeEntity = typeRepository.findByName(typeName);
         if (typeEntity==null){
@@ -92,12 +117,23 @@ public class ProductFacade implements ProductService {
         }
     }
 
+    @Override
+    public void persistType(TypeTO type) {
+        TypeEntity typeEntity = convertToEntity(type);
+        if (typeEntity!=null){
+            typeRepository.save(typeEntity);
+        }else {
+            log.error("Falha ao persistir Type");
+        }
+    }
+
     private List<ProductEntity> convertToEntity(List<ProductTO> products) {
         List<ProductEntity> productEntities = new ArrayList<>();
         try {
             for(ProductTO product : products){
-                if(isTypeValid(product.getType())){
-                    productEntities.add(adapter.adapt(product));
+                TypeEntity typeEntity = typeRepository.findByName(product.getType());
+                if(typeEntity != null){
+                    productEntities.add(adapter.adapt(product, typeEntity));
                 }
                 else {
                     log.error("Tipo de produto recebido inválido! [{}]", product.getType());
@@ -108,6 +144,18 @@ public class ProductFacade implements ProductService {
             log.error("Falha ao persistir lista de produtos ", e);
         }
         return productEntities;
+    }
+
+
+    private TypeEntity convertToEntity(TypeTO type) {
+        TypeEntity typeEntity = new TypeEntity();
+        try {
+            typeEntity = adapter.adapt(type);
+        }
+        catch (Exception e){
+            log.error("Falha ao converter objeto transacional para entidade (Type) ", e);
+        }
+        return typeEntity;
     }
 
     private boolean isTypeValid(String productType) {
