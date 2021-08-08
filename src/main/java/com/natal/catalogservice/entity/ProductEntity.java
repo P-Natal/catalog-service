@@ -20,7 +20,7 @@ public class ProductEntity extends EntityClass{
     private TypeEntity typeEntity;
 
     @Column(name = "price")
-    private int price;
+    private double price;
 
     @Column(name = "available")
     private boolean available;
@@ -28,7 +28,7 @@ public class ProductEntity extends EntityClass{
     public ProductEntity() {
     }
 
-    public ProductEntity(String code, String name, TypeEntity typeEntity, int price, boolean available) {
+    public ProductEntity(String code, String name, TypeEntity typeEntity, double price, boolean available) {
         this.code = code;
         this.name = name;
         this.typeEntity = typeEntity;

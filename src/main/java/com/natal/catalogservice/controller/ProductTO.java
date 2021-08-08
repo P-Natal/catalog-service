@@ -22,7 +22,7 @@ public class ProductTO {
     private String type;
 
     @JsonProperty(required = true)
-    private int price;
+    private double price;
 
     @JsonProperty(required = true)
     private boolean available;
