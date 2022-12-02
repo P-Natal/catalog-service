@@ -70,46 +70,6 @@ public class ProductFacade implements ProductService {
     }
 
     @Override
-    public List<ProductTO> findProductsByTypeName(String typeName) {
-        List<ProductTO> products = new ArrayList<>();
-
-        TypeEntity typeEntity = typeRepository.findByName(typeName);
-        if (typeEntity==null){
-            log.error("erro ao buscar type");
-        }
-        else {
-            log.info("sucesso ao buscar type: {}", typeEntity);
-        }
-
-        List<ProductEntity> productEntities = productRepository.findByType(typeEntity);
-        if (productEntities==null){
-            log.error("erro ao buscar produtos");
-        }
-        else {
-            log.info("sucesso ao buscar produtos: {}", productEntities);
-        }
-
-        for (ProductEntity p : productEntities){
-            products.add(adapter.adapt(p));
-        }
-
-        return products;
-    }
-
-
-    @Override
-    public void insertProduct(Product product){
-        try {
-            ProductEntity productEntity = adapter.adapt(product);
-            ProductEntity productEntityPersisted = productRepository.save(productEntity);
-            log.info("sucesso ao persistir produto: {}", productEntityPersisted);
-        }
-        catch (Exception e){
-            log.error("erro ao persistir produto ", e);
-        }
-    }
-
-    @Override
     public void persistProducts(List<ProductTO> products) {
         List<ProductEntity> productEntities = convertToEntity(products);
         if (!productEntities.isEmpty()){
