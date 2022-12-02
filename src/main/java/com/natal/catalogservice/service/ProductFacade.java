@@ -70,6 +70,16 @@ public class ProductFacade implements ProductService {
     }
 
     @Override
+    public List<ProductTO> findProductsByTypeName(String typeName) {
+        return null;
+    }
+
+    @Override
+    public void insertProduct(Product product) {
+
+    }
+
+    @Override
     public void persistProducts(List<ProductTO> products) {
         List<ProductEntity> productEntities = convertToEntity(products);
         if (!productEntities.isEmpty()){
