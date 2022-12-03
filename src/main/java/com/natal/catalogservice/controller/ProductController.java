@@ -1,5 +1,8 @@
 package com.natal.catalogservice.controller;
 
+import com.natal.catalogservice.controller.dto.InsertProductsRequestTO;
+import com.natal.catalogservice.controller.dto.ProductTO;
+import com.natal.catalogservice.controller.dto.TypeTO;
 import com.natal.catalogservice.facade.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -43,14 +46,14 @@ public class ProductController {
         if (productCode != null){
             return ResponseEntity.ok(productTO);
         }
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.notFound().build();
     }
 
     @PostMapping("/type")
     public ResponseEntity<?> createProductType(@RequestBody TypeTO type){
         try{
             productService.persistType(type);
-            return ResponseEntity.ok().build();
+            return new ResponseEntity<>(HttpStatus.CREATED);
         }
         catch (Exception e){
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -58,10 +61,10 @@ public class ProductController {
     }
 
     @PostMapping
-    public ResponseEntity<?> createProductList(@RequestBody InsertProductsRequest products){
+    public ResponseEntity<?> createProductList(@RequestBody InsertProductsRequestTO products){
         try{
             productService.persistProducts(products.getProducts());
-            return ResponseEntity.ok().build();
+            return new ResponseEntity<>(HttpStatus.CREATED);
         }
         catch (Exception e){
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

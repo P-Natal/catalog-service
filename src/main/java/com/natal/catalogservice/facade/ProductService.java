@@ -1,8 +1,8 @@
 package com.natal.catalogservice.facade;
 
 
-import com.natal.catalogservice.controller.ProductTO;
-import com.natal.catalogservice.controller.TypeTO;
+import com.natal.catalogservice.controller.dto.ProductTO;
+import com.natal.catalogservice.controller.dto.TypeTO;
 import com.natal.catalogservice.domain.Product;
 import org.springframework.stereotype.Service;
 

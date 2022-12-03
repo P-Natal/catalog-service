@@ -1,11 +1,12 @@
 package com.natal.catalogservice.service;
 
+import com.natal.catalogservice.controller.dto.ProductTO;
+import com.natal.catalogservice.controller.dto.TypeTO;
 import com.natal.catalogservice.domain.Product;
 import com.natal.catalogservice.domain.Type;
 import com.natal.catalogservice.entity.ProductEntity;
 import com.natal.catalogservice.entity.TypeEntity;
 import org.springframework.stereotype.Component;
-import com.natal.catalogservice.controller.*;
 
 @Component
 public class Adapter {

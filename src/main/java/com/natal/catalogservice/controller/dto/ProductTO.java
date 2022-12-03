@@ -1,4 +1,4 @@
-package com.natal.catalogservice.controller;
+package com.natal.catalogservice.controller.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
