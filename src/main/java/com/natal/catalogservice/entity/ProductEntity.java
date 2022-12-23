@@ -19,7 +19,7 @@ public class ProductEntity extends EntityClass{
     @JoinColumn(name = "type_id")
     private TypeEntity typeEntity;
 
-    @Column(name = "price")
+    @Column(name = "price", precision=10, scale=2)
     private double price;
 
     @Column(name = "available")

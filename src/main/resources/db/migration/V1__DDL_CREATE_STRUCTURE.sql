@@ -11,7 +11,7 @@ create table product
     code            varchar(20) not null,
     name            varchar(50) not null,
     type_id         bigint not null references type (id),
-    price           money NOT NULL,
+    price           float NOT NULL,
     available       boolean not null,
     registry_date   timestamp not null,
     last_update     timestamp not null
