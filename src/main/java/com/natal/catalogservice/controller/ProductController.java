@@ -3,6 +3,7 @@ package com.natal.catalogservice.controller;
 import com.natal.catalogservice.controller.dto.InsertProductsRequestTO;
 import com.natal.catalogservice.controller.dto.ProductTO;
 import com.natal.catalogservice.controller.dto.TypeTO;
+import com.natal.catalogservice.exception.TypeNotFoundException;
 import com.natal.catalogservice.facade.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -40,10 +41,10 @@ public class ProductController {
     }
 
     @GetMapping("/{productCode}")
-    public ResponseEntity<?> getProductList(@PathVariable(value = "productCode") String productCode){
+    public ResponseEntity<?> getProduct(@PathVariable(value = "productCode") String productCode){
         ProductTO productTO;
         productTO = productService.findProductByCode(productCode);
-        if (productCode != null){
+        if (productTO != null){
             return ResponseEntity.ok(productTO);
         }
         return ResponseEntity.notFound().build();
@@ -66,8 +67,11 @@ public class ProductController {
             productService.persistProducts(products.getProducts());
             return new ResponseEntity<>(HttpStatus.CREATED);
         }
+        catch (TypeNotFoundException e){
+            return new ResponseEntity<>(e.getMessage(),HttpStatus.UNPROCESSABLE_ENTITY);
+        }
         catch (Exception e){
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }

@@ -8,7 +8,7 @@ create table type
 create table product
 (
     id              bigserial constraint product_key primary key,
-    code            varchar(20) not null,
+    code            varchar(20) not null unique,
     name            varchar(50) not null,
     type_id         bigint not null references type (id),
     price           float NOT NULL,

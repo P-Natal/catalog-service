@@ -10,19 +10,3 @@ services:
       - POSTGRES_USERNAME=postgres
       - POSTGRES_PASSWORD=postgres
     container_name: postgres_catalog
-    networks:
-      - sales-order-service_localnet
-
-  catalog-service:
-    image: natal/catalog-service:1.0
-    ports:
-      - "8084:8084"
-    container_name: catalog_service
-    depends_on:
-      - postgres-catalog
-    networks:
-      - sales-order-service_localnet
-
-networks:
-  sales-order-service_localnet:
-    external: true
