@@ -74,4 +74,15 @@ public class ProductController {
             return new ResponseEntity<>(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @DeleteMapping("/{productCode}")
+    public ResponseEntity deleteProductByCode(@PathVariable(value = "productCode") String productCode){
+        try{
+            productService.deleteProduct(productCode);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+        catch (Exception e){
+            return new ResponseEntity<>(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

@@ -100,6 +100,14 @@ public class ProductFacade implements ProductService {
         }
     }
 
+    @Override
+    public void deleteProduct(String productCode) {
+        ProductEntity productEntity = productRepository.findByCode(productCode);
+        if (productEntity!=null){
+            productRepository.delete(productEntity);
+        }
+    }
+
     private List<ProductEntity> convertToEntity(List<ProductTO> products) {
         List<ProductEntity> productEntities = new ArrayList<>();
         for(ProductTO product : products){

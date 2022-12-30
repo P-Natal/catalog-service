@@ -18,4 +18,6 @@ public interface ProductService {
     void insertProduct(Product product);
     void persistProducts(List<ProductTO> products);
     void persistType(TypeTO type);
+
+    void deleteProduct(String productCode);
 }
